@@ -1,29 +1,33 @@
 echo Creating play project $1
 
+if [ "$1" != "" ]; then
 
-play new $1
-cd $1
+	play new $1
+	cd $1
 
-#echo "Idealize (y/n)?"
-#read idealize
+	cp -rf /usr/local/scripts/vghost/add-on-files/basic/. .
 
-#if [ "$idealize" == "y" ]
-#then
-#  play idealize
-#fi
+	echo "Add Lightcouch support (y/n)?"
+	read couch
+	if [ "$couch" == "y" ]; then
+		#cp -rf /usr/local/scripts/vghost/dependency-files/couchdb.yml ./conf/dependencies.yml
+		cp -rf /usr/local/scripts/vghost/add-on-files/couch/. .
+		perl -pi -w -e 's/#REPLACEDBYVGHOST/GET\t\t\/store\/load\/\{id\}\t\t\t\t\t\tStore.load\n#REPLACEDBYVGHOST/g' conf/routes
+		perl -pi -w -e 's/#REPLACEDBYVGHOST/POST\t\/store\/save\t\t\t\t\t\t\t\tStore.save\n#REPLACEDBYVGHOST/g' conf/routes
+	fi
 
-echo "Add Lightcouch lib (y/n)?"
-read couch
-if [ "$couch"] == "y"
-then
-	cp -rf /usr/local/scripts/vg/dependency-files/couchdb.yml ./conf/dependencies.yml
+	echo "Add drag & drop upload support (y/n)?"
+	read dragdrop
+	if [ "$dragdrop" == "y" ]; then
+		cp -rf /usr/local/scripts/vghost/add-on-files/ddupload/. .
+		echo -e '\nlibs/dropzone.js' >> build/includelists/libs-scripts.files
+		perl -pi -w -e 's/#REPLACEDBYVGHOST/POST\t\/upload\t\t\t\t\t\t\t\t\tUpload.upload\n#REPLACEDBYVGHOST/g' conf/routes
+		mkdir ./public/uploads
+		#chmod 777 ./public/uploads
+	fi
+
+	play dependencies
+
+else
+	echo "No name specified!"
 fi
-
-cp -rf /usr/local/scripts/vg/add-on-files/. .
-
-#todo: fix this to work
-
-echo "Port (9000)?"
-read port
-
-#sed 's/# http.port=9000/http.port=$port/g' ./conf/application.conf7

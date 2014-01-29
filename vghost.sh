@@ -12,7 +12,7 @@ then
   play idealize
 fi
 
-cp -rf /usr/local/scripts/vg/add-on-files/. .
+cp -rf /usr/local/scripts/vghost/add-on-files/. .
 
 #todo: fix this to work
 
