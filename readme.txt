@@ -1,13 +1,13 @@
 VENGEFUL GHOST README
 
-1. Make sure that the folder "vg" is in an accessible location, for example
+1. This version of vengeful ghost assumes that the vghost folder is at:
 
-	usr/local
+	/usr/local/scripts/
 
 
-2. Make sure that the script file (vghost.sh) is chmodded to allow execution:
+2. Make sure that the script file (vghost2.sh) is chmodded to allow execution:
 
-	$ chmod +x vghost.sh
+	$ chmod +x vghost2.sh
 
 
 3. The files in the project structure of your Play! project that you wish to add/replace should be placed in the directory add-on-files
@@ -15,8 +15,6 @@ VENGEFUL GHOST README
 
 4. Then run the script like so:
 
-	$ vghost.sh <projectname> <options> <port>
+	$ vghost2.sh <projectname>
 
-   options being:
-	-i : idealize (perpare the project for development in IntelliJ)
-        -e : eclipsify (prepare the project for development in Eclipse)
+5. Answer the questions regarding couch-db and drag-and-drop upload support according to your needs.
